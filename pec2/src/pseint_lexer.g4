@@ -5,7 +5,7 @@ fragment ESCAPAR:'\\'["'\\];
 
 //Keywords
 ALGORITMO:A L G O R I T M O;
-
+FUNCION: F U N C I O N;
 
 //Letras
 fragment A:[Aa];
