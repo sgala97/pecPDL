@@ -24,6 +24,9 @@ DEOTROMODO: D E ' ' O T R O ' ' M O D O;
 FINSEGUN: F I N S E G U N;
 REPETIR: R E P E T I R;
 HASTA: H A S T A ' ' Q U E;
+ASIGNACION:'<-';
+APARENTESIS:'(';
+CPARENTESIS:')';
 
 
 //Operadores
@@ -52,6 +55,10 @@ ENTERO:'-'?[0-9]+;
 REAL:'-'?[0-9]+('.'[0-9]+)?;
 LOGICO: 'Verdadero'|'Falso';
 CADENA:('\''(ESCAPAR|.)*?'\'')|('"'(ESCAPAR|.)*?'"');
+
+
+//saltar
+WS:(' '|'\\t') -> skip;
 
 fragment ESCAPAR:'\\'["'\\];
 //Letras
