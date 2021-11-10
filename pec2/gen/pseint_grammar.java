@@ -1,4 +1,4 @@
-// Generated from /home/checo/asignaturas/pec2/src/pseint_grammar.g4 by ANTLR 4.9.2
+// Generated from H:/OneDrive/OneDrive - Universidad de Alcala/3º TERCERO/Procesardores del Lenguaje/Practica2/pecPDL/pec2/src\pseint_grammar.g4 by ANTLR 4.9.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -16,7 +16,7 @@ public class pseint_grammar extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		ENTERO=1, CADENA=2;
+		ENTERO=1, CADENA=2, ALGORITMO=3, TIPOVARIABLE=4;
 	public static final int
 		RULE_pseint = 0;
 	private static String[] makeRuleNames() {
@@ -33,7 +33,7 @@ public class pseint_grammar extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "ENTERO", "CADENA"
+			null, "ENTERO", "CADENA", "ALGORITMO", "TIPOVARIABLE"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -88,7 +88,7 @@ public class pseint_grammar extends Parser {
 	}
 
 	public static class PseintContext extends ParserRuleContext {
-		public TerminalNode CADENA() { return getToken(pseint_grammar.CADENA, 0); }
+		public TerminalNode TIPOVARIABLE() { return getToken(pseint_grammar.TIPOVARIABLE, 0); }
 		public TerminalNode EOF() { return getToken(pseint_grammar.EOF, 0); }
 		public PseintContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -116,7 +116,7 @@ public class pseint_grammar extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(2);
-			match(CADENA);
+			match(TIPOVARIABLE);
 			setState(3);
 			match(EOF);
 			}
@@ -133,8 +133,8 @@ public class pseint_grammar extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\4\b\4\2\t\2\3\2\3"+
-		"\2\3\2\3\2\2\2\3\2\2\2\2\6\2\4\3\2\2\2\4\5\7\4\2\2\5\6\7\2\2\3\6\3\3\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\6\b\4\2\t\2\3\2\3"+
+		"\2\3\2\3\2\2\2\3\2\2\2\2\6\2\4\3\2\2\2\4\5\7\6\2\2\5\6\7\2\2\3\6\3\3\2"+
 		"\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

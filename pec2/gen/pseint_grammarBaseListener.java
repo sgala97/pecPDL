@@ -1,4 +1,4 @@
-// Generated from /home/checo/asignaturas/pec2/src/pseint_grammar.g4 by ANTLR 4.9.2
+// Generated from H:/OneDrive/OneDrive - Universidad de Alcala/3º TERCERO/Procesardores del Lenguaje/Practica2/pecPDL/pec2/src\pseint_grammar.g4 by ANTLR 4.9.2
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
