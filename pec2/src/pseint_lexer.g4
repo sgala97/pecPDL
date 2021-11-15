@@ -54,7 +54,7 @@ NOMBREVARIABLE:[A-Za-z][A-Za-z_0-9]*;
 ENTERO:'-'?[0-9]+;
 REAL:'-'?[0-9]+('.'[0-9]+)?;
 LOGICO: 'Verdadero'|'Falso';
-CADENA:('\''(ESCAPAR|.)*?'\'')|('"'(ESCAPAR|.)*?'"');
+CADENA:(('\'')|('"')(ESCAPAR|.)*?('\'')|('"'));
 
 
 //saltar
