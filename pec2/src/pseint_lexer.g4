@@ -27,7 +27,8 @@ HASTA: H A S T A ' ' Q U E;
 ASIGNACION:'<-';
 APARENTESIS:'(';
 CPARENTESIS:')';
-
+PUNTOCOMA: ';';
+SALTOLINEA: '//n';
 
 //Operadores
 MAYOR: '>';
@@ -59,6 +60,7 @@ CADENA:(('\'')|('"')(ESCAPAR|.)*?('\'')|('"'));
 
 //saltar
 WS:(' '|'\\t') -> skip;
+//
 
 fragment ESCAPAR:'\\'["'\\];
 //Letras
