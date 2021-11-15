@@ -1,6 +1,6 @@
 parser grammar pseint_grammar;
 options { tokenVocab = pseint_lexer;}
-//pseint:  (instruccion (;|\n))* EOF;
+pseint:  (instruccion (;|\n))* EOF;
 declaracion: DEFINIR NOMBREVARIABLE COMO TIPOVARIABLE;
 asignacion: NOMBREVARIABLE ASIGNACION operacion;
 
