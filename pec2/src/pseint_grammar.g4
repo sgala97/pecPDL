@@ -23,6 +23,7 @@ asignacion: NOMBRE (ACORCHETE (operacion(COMA operacion)*) CCORCHETE)? ASIGNACIO
 escribir: ESCRIBIR operacion (COMA operacion)* fininstruccion;
 
 leer: LEER NOMBRE (COMA NOMBRE)* fininstruccion;
+
 sientonces: SI operacion ENTONCES fininstruccion
     bloque+
     (SINO fininstruccion
