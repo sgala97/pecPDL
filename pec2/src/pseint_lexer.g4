@@ -52,12 +52,12 @@ MAYORIGUAL: '>=';
 CONJUNCION: '&'|Y;
 DISYUNCION: '|'|O;
 NEGACION: '~'|(N O);
-SUMA:'+';
-RESTA:'-';
-MULTIPLICACION:'*';
-DIVISION:'/';
 POTENCIACION:'^';
 MODULO: '%'|(M O D);
+MULTIPLICACION:'*';
+DIVISION:'/';
+SUMA:'+';
+RESTA:'-';
 
 //Funciones integradas
 

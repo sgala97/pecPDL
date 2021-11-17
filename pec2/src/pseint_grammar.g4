@@ -14,35 +14,36 @@ algoritmo: (ALGORITMO|PROCESO) NOMBRE SALTOLINEA
 //bloque
 bloque: definicion|asignacion|escribir|leer|sientonces|segun|mientras|repetir|para|lineavacia;
 //expansión de bloque
-definicion: (DEFINIR NOMBRE COMO TIPOVARIABLE)
-    | (DIMENSION NOMBRE ACORCHETE (ENTERO(COMA ENTERO)*) CCORCHETE)
+definicion: ((DEFINIR NOMBRE COMO TIPOVARIABLE)
+    | (DIMENSION NOMBRE ACORCHETE (operacion(COMA operacion)*) CCORCHETE))
     fininstruccion;
 
-asignacion: NOMBRE ASIGNACION (operacion|expresionlogica) fininstruccion;
+asignacion: NOMBRE (ACORCHETE (operacion(COMA operacion)*) CCORCHETE)? ASIGNACION operacion fininstruccion;
 
 escribir: ESCRIBIR operacion (COMA operacion)* fininstruccion;
 
 leer: LEER NOMBRE (COMA NOMBRE)* fininstruccion;
-sientonces: SI expresionlogica ENTONCES fininstruccion
+sientonces: SI operacion ENTONCES fininstruccion
     bloque+
     (SINO fininstruccion
     bloque+)?
     FINSI fininstruccion;
 
 segun: SEGUN NOMBRE HACER fininstruccion
-    ((operacion|expresionlogica)(COMA (operacion|expresionlogica))* DOSPUNTOS fininstruccion
-    bloque*)*
+    caso*
     (DEOTROMODO DOSPUNTOS fininstruccion
     bloque*)?
     FINSEGUN fininstruccion;
 
-mientras: MIENTRAS expresionlogica HACER fininstruccion
+caso: (operacion(COMA operacion)* DOSPUNTOS fininstruccion bloque*);
+
+mientras: MIENTRAS operacion HACER fininstruccion
     bloque*
     FINMIENTRAS fininstruccion;
 
 repetir: REPETIR fininstruccion
     bloque*
-    HASTAQUE expresionlogica fininstruccion;
+    HASTAQUE operacion fininstruccion;
 
 para: PARA NOMBRE ASIGNACION ENTERO HASTA ENTERO (CONPASO ENTERO)? HACER fininstruccion
     bloque*
@@ -50,17 +51,17 @@ para: PARA NOMBRE ASIGNACION ENTERO HASTA ENTERO (CONPASO ENTERO)? HACER fininst
 
 lineavacia: fininstruccion;
 
-//operaciones y expresiones
-expresionlogica: expresionlogica (IGUAL|DISTINTO|CONJUNCION|DISYUNCION|NEGACION) expresionlogica
-    | APARENTESIS expresionlogica CPARENTESIS
-    | operacion ((MAYOR|IGUAL|MENOR|DISTINTO|MENORIGUAL|MAYORIGUAL) operacion)+
-    | LOGICO;
 
-operacion: operacion operadores operacion
+//operaciones
+operacion: operacion (MODULO|POTENCIACION) operacion
+    |   operacion (DIVISION|MULTIPLICACION) operacion
+    |   operacion (SUMA|RESTA) operacion
+    |   operacion (MAYOR|IGUAL|MENOR|DISTINTO|MENORIGUAL|MAYORIGUAL|CONJUNCION|DISYUNCION) operacion
+    |   NEGACION operacion
     |  (NOMBRE|ENTERO|REAL|LOGICO|CADENA|usodimension|usofuncion|(APARENTESIS operacion CPARENTESIS));
-operadores: (MODULO|POTENCIACION|DIVISION|MULTIPLICACION|SUMA|RESTA);
 
-usofuncion: NOMBRE APARENTESIS (operacion (COMA (operacion|expresionlogica))*)? CPARENTESIS;
+
+usofuncion: NOMBRE APARENTESIS (operacion (COMA (operacion)*))? CPARENTESIS;
 usodimension: NOMBRE ACORCHETE (ENTERO(COMA ENTERO)*) CCORCHETE;
 
 //fininstruccion
