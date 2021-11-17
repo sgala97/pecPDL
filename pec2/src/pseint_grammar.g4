@@ -55,8 +55,8 @@ lineavacia: fininstruccion;
 
 //operaciones
 operacion: (RESTA|SUMA) operacion
-    |   operacion (MODULO|POTENCIACION) operacion
-    |   operacion (DIVISION|MULTIPLICACION) operacion
+    |   operacion (POTENCIACION) operacion
+    |   operacion (MODULO|DIVISION|MULTIPLICACION) operacion
     |   operacion (SUMA|RESTA) operacion
     |   operacion (MAYOR|IGUAL|MENOR|DISTINTO|MENORIGUAL|MAYORIGUAL) operacion
     |   operacion (CONJUNCION|DISYUNCION) operacion
@@ -64,7 +64,7 @@ operacion: (RESTA|SUMA) operacion
     |  (NOMBRE|ENTERO|REAL|LOGICO|CADENA|usodimension|usofuncion|(APARENTESIS operacion CPARENTESIS));
 
 
-usofuncion: NOMBRE APARENTESIS (operacion (COMA (operacion)*))? CPARENTESIS;
+usofuncion: NOMBRE APARENTESIS (operacion (COMA operacion)*)? CPARENTESIS;
 usodimension: NOMBRE ACORCHETE (ENTERO(COMA ENTERO)*) CCORCHETE;
 
 //fininstruccion
