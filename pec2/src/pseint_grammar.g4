@@ -57,7 +57,8 @@ lineavacia: fininstruccion;
 operacion: operacion (MODULO|POTENCIACION) operacion
     |   operacion (DIVISION|MULTIPLICACION) operacion
     |   operacion (SUMA|RESTA) operacion
-    |   operacion (MAYOR|IGUAL|MENOR|DISTINTO|MENORIGUAL|MAYORIGUAL|CONJUNCION|DISYUNCION) operacion
+    |   operacion (MAYOR|IGUAL|MENOR|DISTINTO|MENORIGUAL|MAYORIGUAL) operacion
+    |   operacion (CONJUNCION|DISYUNCION) operacion
     |   NEGACION operacion
     |  (NOMBRE|ENTERO|REAL|LOGICO|CADENA|usodimension|usofuncion|(APARENTESIS operacion CPARENTESIS));
 

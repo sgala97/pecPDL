@@ -22,7 +22,7 @@ FINPARA: F I N ' '* P A R A;
 CONPASO: C O N ' '+ P A S O;
 DIMENSION: D I M E N S I O N;
 SI: S I;
-FINSI: F I ' '* N S I;
+FINSI: F I N ' '* S I;
 ENTONCES: E N T O N C E S;
 SINO: S I N O;
 SEGUN: S E G U N;
