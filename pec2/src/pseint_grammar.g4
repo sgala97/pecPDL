@@ -1,33 +1,36 @@
 parser grammar pseint_grammar;
 options { tokenVocab = pseint_lexer;}
-pseint:  funcion* algoritmo funcion* EOF;
-funcion: (FUNCION|SUBPROCESO) NOMBREVARIABLE ASIGNACION NOMBREFUNCION APARENTESIS (NOMBREVARIABLE(COMA NOMBREVARIABLE)*)? CPARENTESIS SALTOLINEA
-    bloque*
-    (FINFUNCION|FINSUBPROCESO) SALTOLINEA;
+pseint: SALTOLINEA* (funcion SALTOLINEA+)* algoritmo (SALTOLINEA+ funcion)* SALTOLINEA* EOF;
 
-algoritmo: (ALGORITMO|PROCESO) NOMBREALGORITMO SALTOLINEA
+//funciones y procesos
+funcion: (FUNCION|SUBPROCESO|SUBALGORITMO) NOMBRE ASIGNACION NOMBRE APARENTESIS (NOMBRE(COMA NOMBRE)*)? CPARENTESIS SALTOLINEA
     bloque*
-    (FINALGORITMO|FINPROCESO) SALTOLINEA;
+    (FINFUNCION|FINSUBPROCESO|FINSUBALGORITMO);
+
+algoritmo: (ALGORITMO|PROCESO) NOMBRE SALTOLINEA
+    bloque*
+    (FINALGORITMO|FINPROCESO);
 
 //bloque
-bloque: definicion|asignacion|escribir|leer|sientonces|segun|mientras|repetir|para;
+bloque: definicion|asignacion|escribir|leer|sientonces|segun|mientras|repetir|para|lineavacia;
 //expansión de bloque
-definicion: DEFINIR NOMBREVARIABLE COMO TIPOVARIABLE fininstruccion;
+definicion: (DEFINIR NOMBRE COMO TIPOVARIABLE)
+    | (DIMENSION NOMBRE ACORCHETE (ENTERO(COMA ENTERO)*) CCORCHETE)
+    fininstruccion;
 
-asignacion: NOMBREVARIABLE ASIGNACION operacion fininstruccion;
+asignacion: NOMBRE ASIGNACION (operacion|expresionlogica) fininstruccion;
 
-escribir: ESCRIBIR (NOMBREVARIABLE|ENTERO|REAL|LOGICO|CADENA) (COMA (NOMBREVARIABLE|ENTERO|REAL|LOGICO|CADENA))* fininstruccion;
+escribir: ESCRIBIR operacion (COMA operacion)* fininstruccion;
 
-leer: LEER NOMBREVARIABLE (COMA NOMBREVARIABLE)* fininstruccion;
-
+leer: LEER NOMBRE (COMA NOMBRE)* fininstruccion;
 sientonces: SI expresionlogica ENTONCES fininstruccion
     bloque+
     (SINO fininstruccion
     bloque+)?
     FINSI fininstruccion;
 
-segun: SEGUN NOMBREVARIABLE HACER fininstruccion
-    (ENTERO(COMA ENTERO)* DOSPUNTOS fininstruccion
+segun: SEGUN NOMBRE HACER fininstruccion
+    ((operacion|expresionlogica)(COMA (operacion|expresionlogica))* DOSPUNTOS fininstruccion
     bloque*)*
     (DEOTROMODO DOSPUNTOS fininstruccion
     bloque*)?
@@ -39,18 +42,26 @@ mientras: MIENTRAS expresionlogica HACER fininstruccion
 
 repetir: REPETIR fininstruccion
     bloque*
-    HASTA expresionlogica fininstruccion;
+    HASTAQUE expresionlogica fininstruccion;
 
-para: PARA NOMBREVARIABLE ASIGNACION ENTERO HASTA ENTERO (CONPASO ENTERO)? HACER fininstruccion
+para: PARA NOMBRE ASIGNACION ENTERO HASTA ENTERO (CONPASO ENTERO)? HACER fininstruccion
     bloque*
     FINPARA fininstruccion;
 
+lineavacia: fininstruccion;
 
-expresionlogica:
+//operaciones y expresiones
+expresionlogica: expresionlogica (IGUAL|DISTINTO|CONJUNCION|DISYUNCION|NEGACION) expresionlogica
+    | APARENTESIS expresionlogica CPARENTESIS
+    | operacion ((MAYOR|IGUAL|MENOR|DISTINTO|MENORIGUAL|MAYORIGUAL) operacion)+
+    | LOGICO;
 
-
-operacion: (operando (operadores operando)*);
+operacion: operacion operadores operacion
+    |  (NOMBRE|ENTERO|REAL|LOGICO|CADENA|usodimension|usofuncion|(APARENTESIS operacion CPARENTESIS));
 operadores: (MODULO|POTENCIACION|DIVISION|MULTIPLICACION|SUMA|RESTA);
-operando: (NOMBREVARIABLE|ENTERO|REAL|(APARENTESIS operacion CPARENTESIS));
 
+usofuncion: NOMBRE APARENTESIS (operacion (COMA (operacion|expresionlogica))*)? CPARENTESIS;
+usodimension: NOMBRE ACORCHETE (ENTERO(COMA ENTERO)*) CCORCHETE;
+
+//fininstruccion
 fininstruccion: ((PUNTOCOMA SALTOLINEA?)|SALTOLINEA);
