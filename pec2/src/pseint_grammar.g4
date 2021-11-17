@@ -54,7 +54,8 @@ lineavacia: fininstruccion;
 
 
 //operaciones
-operacion: operacion (MODULO|POTENCIACION) operacion
+operacion: (RESTA|SUMA) operacion
+    |   operacion (MODULO|POTENCIACION) operacion
     |   operacion (DIVISION|MULTIPLICACION) operacion
     |   operacion (SUMA|RESTA) operacion
     |   operacion (MAYOR|IGUAL|MENOR|DISTINTO|MENORIGUAL|MAYORIGUAL) operacion
