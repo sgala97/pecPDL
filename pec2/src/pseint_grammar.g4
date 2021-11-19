@@ -1,6 +1,6 @@
 parser grammar pseint_grammar;
 options { tokenVocab = pseint_lexer;}
-pseint: SALTOLINEA* (funcion SALTOLINEA+)* algoritmo (SALTOLINEA+ funcion)* SALTOLINEA* EOF;
+pseint: lineavacia* (funcion lineavacia+)* algoritmo (lineavacia+ funcion)* lineavacia* EOF;
 
 //funciones y procesos
 funcion: (FUNCION|SUBPROCESO|SUBALGORITMO) NOMBRE ASIGNACION NOMBRE APARENTESIS (NOMBRE(COMA NOMBRE)*)? CPARENTESIS SALTOLINEA
@@ -50,8 +50,10 @@ para: PARA NOMBRE ASIGNACION ENTERO HASTA ENTERO (CONPASO ENTERO)? HACER fininst
     bloque*
     FINPARA fininstruccion;
 
-lineavacia: fininstruccion;
+lineavacia: SALTOLINEA;
 
+//fininstruccion
+fininstruccion: ((PUNTOCOMA SALTOLINEA?)|SALTOLINEA);
 
 //operaciones
 operacion: (RESTA|SUMA) operacion
@@ -67,5 +69,3 @@ operacion: (RESTA|SUMA) operacion
 usofuncion: NOMBRE APARENTESIS (operacion (COMA operacion)*)? CPARENTESIS;
 usodimension: NOMBRE ACORCHETE (ENTERO(COMA ENTERO)*) CCORCHETE;
 
-//fininstruccion
-fininstruccion: ((PUNTOCOMA SALTOLINEA?)|SALTOLINEA);
