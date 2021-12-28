@@ -1,5 +1,9 @@
 parser grammar pseint_grammar;
 options { tokenVocab = pseint_lexer;}
+@header
+{
+    package gen;
+}
 pseint: lineavacia* (funcion lineavacia+)* algoritmo (lineavacia+ funcion)* lineavacia* EOF;
 
 //funciones y procesos
