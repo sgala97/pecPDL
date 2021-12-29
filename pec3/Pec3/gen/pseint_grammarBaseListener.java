@@ -1,8 +1,5 @@
 // Generated from H:/OneDrive/OneDrive - Universidad de Alcala/3º TERCERO/Procesardores del Lenguaje/Practica3/pecPDL/pec3/Pec3/src\pseint_grammar.g4 by ANTLR 4.9.2
 
-    package gen;
-
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -54,13 +51,37 @@ public class pseint_grammarBaseListener implements pseint_grammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBloque(pseint_grammar.BloqueContext ctx) { }
+	@Override public void enterBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBloque(pseint_grammar.BloqueContext ctx) { }
+	@Override public void exitBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBloqueFlujo(pseint_grammar.BloqueFlujoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBloqueFlujo(pseint_grammar.BloqueFlujoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBloqueVacio(pseint_grammar.BloqueVacioContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBloqueVacio(pseint_grammar.BloqueVacioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -145,6 +166,18 @@ public class pseint_grammarBaseListener implements pseint_grammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSientonces(pseint_grammar.SientoncesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeotromodo(pseint_grammar.DeotromodoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeotromodo(pseint_grammar.DeotromodoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -1,7 +1,4 @@
 // Generated from H:/OneDrive/OneDrive - Universidad de Alcala/3º TERCERO/Procesardores del Lenguaje/Practica3/pecPDL/pec3/Pec3/src\pseint_grammar.g4 by ANTLR 4.9.2
-
-    package gen;
-
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -31,11 +28,26 @@ public interface pseint_grammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAlgoritmo(pseint_grammar.AlgoritmoContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link pseint_grammar#bloque}.
+	 * Visit a parse tree produced by the {@code bloqueEstandar}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBloque(pseint_grammar.BloqueContext ctx);
+	T visitBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code bloqueFlujo}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBloqueFlujo(pseint_grammar.BloqueFlujoContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code bloqueVacio}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBloqueVacio(pseint_grammar.BloqueVacioContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link pseint_grammar#definicion}.
 	 * @param ctx the parse tree
@@ -78,6 +90,12 @@ public interface pseint_grammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSientonces(pseint_grammar.SientoncesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link pseint_grammar#deotromodo}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeotromodo(pseint_grammar.DeotromodoContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link pseint_grammar#segun}.
 	 * @param ctx the parse tree

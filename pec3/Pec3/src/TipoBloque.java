@@ -1,6 +1,10 @@
 public enum TipoBloque {
 
-    BUCLE,
-    BIFURCACION,
-    FUNCION
+    ESTANDAR,
+    IF,
+    ELSE,
+    CASO,
+    FOR,
+    WHILE,
+    DOWHILE
 }

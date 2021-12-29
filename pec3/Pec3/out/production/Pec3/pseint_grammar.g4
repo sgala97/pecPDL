@@ -12,7 +12,18 @@ algoritmo: (ALGORITMO|PROCESO) NOMBRE SALTOLINEA
     (FINALGORITMO|FINPROCESO);
 
 //bloque
-bloque: definicion|asignacion|escribir|leer|sientonces|segun|mientras|repetir|para|lineavacia;
+bloque: definicion #bloqueEstandar
+        |asignacion #bloqueEstandar
+        |escribir #bloqueEstandar
+        |leer #bloqueEstandar
+        |sientonces #bloqueFlujo
+        |segun #bloqueFlujo
+        |mientras #bloqueFlujo
+        |repetir #bloqueFlujo
+        |para #bloqueFlujo
+        |lineavacia #bloqueVacio
+        ;
+
 //expansión de bloque
 definicion: ((DEFINIR NOMBRE COMO TIPOVARIABLE)
     | (DIMENSION NOMBRE ACORCHETE (operacion(COMA operacion)*) CCORCHETE))
@@ -31,10 +42,11 @@ sientonces: SI operacion ENTONCES fininstruccion
     (SINO fininstruccion bloqueno)?
     FINSI fininstruccion;
 
+deotromodo: DEOTROMODO DOSPUNTOS fininstruccion
+    bloque*;
 segun: SEGUN NOMBRE HACER fininstruccion
     caso*
-    (DEOTROMODO DOSPUNTOS fininstruccion
-    bloque*)?
+    deotromodo?
     FINSEGUN fininstruccion;
 
 caso: (operacion(COMA operacion)* DOSPUNTOS fininstruccion bloque*);

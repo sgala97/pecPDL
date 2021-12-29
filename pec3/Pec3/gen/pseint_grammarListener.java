@@ -1,7 +1,4 @@
 // Generated from H:/OneDrive/OneDrive - Universidad de Alcala/3º TERCERO/Procesardores del Lenguaje/Practica3/pecPDL/pec3/Pec3/src\pseint_grammar.g4 by ANTLR 4.9.2
-
-    package gen;
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -40,15 +37,41 @@ public interface pseint_grammarListener extends ParseTreeListener {
 	 */
 	void exitAlgoritmo(pseint_grammar.AlgoritmoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link pseint_grammar#bloque}.
+	 * Enter a parse tree produced by the {@code bloqueEstandar}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
 	 * @param ctx the parse tree
 	 */
-	void enterBloque(pseint_grammar.BloqueContext ctx);
+	void enterBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link pseint_grammar#bloque}.
+	 * Exit a parse tree produced by the {@code bloqueEstandar}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
 	 * @param ctx the parse tree
 	 */
-	void exitBloque(pseint_grammar.BloqueContext ctx);
+	void exitBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bloqueFlujo}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * @param ctx the parse tree
+	 */
+	void enterBloqueFlujo(pseint_grammar.BloqueFlujoContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bloqueFlujo}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * @param ctx the parse tree
+	 */
+	void exitBloqueFlujo(pseint_grammar.BloqueFlujoContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bloqueVacio}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * @param ctx the parse tree
+	 */
+	void enterBloqueVacio(pseint_grammar.BloqueVacioContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bloqueVacio}
+	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * @param ctx the parse tree
+	 */
+	void exitBloqueVacio(pseint_grammar.BloqueVacioContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pseint_grammar#definicion}.
 	 * @param ctx the parse tree
@@ -119,6 +142,16 @@ public interface pseint_grammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSientonces(pseint_grammar.SientoncesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link pseint_grammar#deotromodo}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeotromodo(pseint_grammar.DeotromodoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pseint_grammar#deotromodo}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeotromodo(pseint_grammar.DeotromodoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pseint_grammar#segun}.
 	 * @param ctx the parse tree
