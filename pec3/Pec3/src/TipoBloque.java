@@ -4,6 +4,7 @@ public enum TipoBloque {
     IF,
     ELSE,
     CASO,
+    DEOTROMODO,
     FOR,
     WHILE,
     DOWHILE

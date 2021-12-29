@@ -1,4 +1,4 @@
-// Generated from H:/OneDrive/OneDrive - Universidad de Alcala/3º TERCERO/Procesardores del Lenguaje/Practica3/pecPDL/pec3/Pec3/src\pseint_grammar.g4 by ANTLR 4.9.2
+// Generated from /home/checo/Documentos/asignaturas/tercer curso/compiladores/pecPDL/pec3/Pec3/src/pseint_grammar.g4 by ANTLR 4.9.2
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -37,41 +37,25 @@ public interface pseint_grammarListener extends ParseTreeListener {
 	 */
 	void exitAlgoritmo(pseint_grammar.AlgoritmoContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code bloqueEstandar}
-	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * Enter a parse tree produced by {@link pseint_grammar#bloqueEstandar}.
 	 * @param ctx the parse tree
 	 */
 	void enterBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code bloqueEstandar}
-	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * Exit a parse tree produced by {@link pseint_grammar#bloqueEstandar}.
 	 * @param ctx the parse tree
 	 */
 	void exitBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code bloqueFlujo}
-	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * Enter a parse tree produced by {@link pseint_grammar#bloque}.
 	 * @param ctx the parse tree
 	 */
-	void enterBloqueFlujo(pseint_grammar.BloqueFlujoContext ctx);
+	void enterBloque(pseint_grammar.BloqueContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code bloqueFlujo}
-	 * labeled alternative in {@link pseint_grammar#bloque}.
+	 * Exit a parse tree produced by {@link pseint_grammar#bloque}.
 	 * @param ctx the parse tree
 	 */
-	void exitBloqueFlujo(pseint_grammar.BloqueFlujoContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code bloqueVacio}
-	 * labeled alternative in {@link pseint_grammar#bloque}.
-	 * @param ctx the parse tree
-	 */
-	void enterBloqueVacio(pseint_grammar.BloqueVacioContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code bloqueVacio}
-	 * labeled alternative in {@link pseint_grammar#bloque}.
-	 * @param ctx the parse tree
-	 */
-	void exitBloqueVacio(pseint_grammar.BloqueVacioContext ctx);
+	void exitBloque(pseint_grammar.BloqueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pseint_grammar#definicion}.
 	 * @param ctx the parse tree

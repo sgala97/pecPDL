@@ -9,6 +9,7 @@ public class Bloque
 
     public Bloque(TipoBloque tipo)
     {
+        hijos = new ArrayList<>();
         this.tipo = tipo;
     }
     public void addHijo(Bloque bloque){
@@ -24,7 +25,7 @@ public class Bloque
         return puntuacion;
     }
 
-    public void setPuntuacionesHijos()
+    public void setPuntuacionDeHijos()
     {
         for(Bloque bloque: hijos) {
             if (bloque.getTipo() != TipoBloque.ESTANDAR)
@@ -36,6 +37,10 @@ public class Bloque
                 puntuacion += bloque.getPuntuacion();
             }
         }
+    }
+    public void sumarPuntuacion(int n)
+    {
+        puntuacion += n;
     }
 
 }

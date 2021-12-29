@@ -12,17 +12,9 @@ algoritmo: (ALGORITMO|PROCESO) NOMBRE SALTOLINEA
     (FINALGORITMO|FINPROCESO);
 
 //bloque
-bloque: definicion #bloqueEstandar
-        |asignacion #bloqueEstandar
-        |escribir #bloqueEstandar
-        |leer #bloqueEstandar
-        |sientonces #bloqueFlujo
-        |segun #bloqueFlujo
-        |mientras #bloqueFlujo
-        |repetir #bloqueFlujo
-        |para #bloqueFlujo
-        |lineavacia #bloqueVacio
-        ;
+bloqueEstandar: (definicion | asignacion | escribir | leer)+;
+
+bloque: bloqueEstandar | sientonces | segun | mientras | repetir | para | lineavacia;
 
 //expansión de bloque
 definicion: ((DEFINIR NOMBRE COMO TIPOVARIABLE)

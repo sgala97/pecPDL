@@ -2,196 +2,190 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class Listener extends pseint_grammarBaseListener {
-    private HashMap<String, BloqueRaiz> programa = new HashMap<>();
-    private int puntuacionPrograma = 0;
-    private BloqueRaiz raizActual;
-    private Stack<Bloque> pilaActual = new Stack<>();
+    TablaDeSimbolos tablaDeSimbolos;
+    //Constructor que recibe tabla de símbolos
+    public Listener(TablaDeSimbolos tablaDeSimbolos)
+    {
+        this.tablaDeSimbolos = tablaDeSimbolos;
+    }
 
     @Override
     public void enterAlgoritmo(pseint_grammar.AlgoritmoContext ctx) {
         super.enterAlgoritmo(ctx);
-        raizActual = new BloqueRaiz();
-        pilaActual = new Stack<>();
-        programa.put(ctx.NOMBRE().getText(), raizActual);
+        tablaDeSimbolos.setRaizActual(new BloqueRaiz());
+        tablaDeSimbolos.setPrograma(tablaDeSimbolos.getRaizActual());
     }
 
     @Override
     public void exitAlgoritmo(pseint_grammar.AlgoritmoContext ctx) {
         super.exitAlgoritmo(ctx);
-        pilaActual.pop();
-        raizActual.sumarLineasEfectivas(1);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
+        tablaDeSimbolos.getRaizActual().setPuntuacionesHijos();
     }
 
     @Override
     public void enterFuncion(pseint_grammar.FuncionContext ctx) {
         super.enterFuncion(ctx);
-        raizActual = new BloqueRaiz();
-        pilaActual = new Stack<>();
-        raizActual.sumarPuntuacion((ctx.NOMBRE().size()-2)*2);
-        raizActual.sumarParametros(ctx.NOMBRE().size()-2);
-        programa.put(ctx.NOMBRE().get(1).getText(), raizActual);
+        tablaDeSimbolos.setRaizActual(new BloqueRaiz());
+        tablaDeSimbolos.getRaizActual().sumarPuntuacion((ctx.NOMBRE().size()-2)*2);
+        tablaDeSimbolos.getRaizActual().sumarParametros(ctx.NOMBRE().size()-2);
+        tablaDeSimbolos.addFuncion(ctx.NOMBRE().get(1).getText(), tablaDeSimbolos.getRaizActual());
     }
 
     @Override
     public void exitFuncion(pseint_grammar.FuncionContext ctx) {
         super.exitFuncion(ctx);
-        pilaActual.pop();
-        raizActual.sumarLineasEfectivas(1);
+        //Sumar linea inicio funcion y fin funcion
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
+        tablaDeSimbolos.getRaizActual().setPuntuacionesHijos();
     }
+
 
     @Override
     public void enterBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx) {
         super.enterBloqueEstandar(ctx);
+        //Crea un bloque estandar y lo introduce en la raiz si la pila está vacía
+        //o en la cabeza de la pila
         Bloque bloque = new Bloque(TipoBloque.ESTANDAR);
-        if (pilaActual.isEmpty())
+        if (tablaDeSimbolos.isEmpty())
         {
-            pilaActual.push(bloque);
-            raizActual.addHijo(bloque);
+            tablaDeSimbolos.getRaizActual().addHijo(bloque);
         }
-        else if(pilaActual.peek().getTipo() != TipoBloque.ESTANDAR)
+        else
         {
-            pilaActual.peek().addHijo(bloque);
-            pilaActual.push(bloque);
+            tablaDeSimbolos.peek().addHijo(bloque);
         }
+        tablaDeSimbolos.push(bloque);
     }
 
     @Override
     public void exitBloqueEstandar(pseint_grammar.BloqueEstandarContext ctx) {
         super.exitBloqueEstandar(ctx);
-        if(!ctx.getParent().children.get(ctx.getParent().children.indexOf(ctx) + 1).getText().equals("bloqueEstandar"))
-        {
-            pilaActual.pop();
-        }
+        tablaDeSimbolos.pop();
     }
 
     @Override
     public void enterDefinicion(pseint_grammar.DefinicionContext ctx) {
         super.enterDefinicion(ctx);
-        raizActual.sumarPuntuacion(1);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
+        tablaDeSimbolos.getRaizActual().sumarVariables(1);
+        tablaDeSimbolos.peek().sumarPuntuacion(1);
     }
 
     @Override
-    public void exitDefinicion(pseint_grammar.DefinicionContext ctx) {
-        super.exitDefinicion(ctx);
-        raizActual.sumarLineasEfectivas(1);
-
-    }
-
-    @Override
-    public void exitAsignacion(pseint_grammar.AsignacionContext ctx) {
-        super.exitAsignacion(ctx);
-        raizActual.sumarLineasEfectivas(1);
+    public void enterAsignacion(pseint_grammar.AsignacionContext ctx) {
+        super.enterAsignacion(ctx);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
 
 
     @Override
-    public void exitLeer(pseint_grammar.LeerContext ctx) {
-        super.exitLeer(ctx);
-        raizActual.sumarLineasEfectivas(1);
-        pilaActual.pop();
+    public void enterLeer(pseint_grammar.LeerContext ctx) {
+        super.enterLeer(ctx);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
 
     @Override
-    public void exitEscribir(pseint_grammar.EscribirContext ctx) {
-        super.exitEscribir(ctx);
+    public void enterEscribir(pseint_grammar.EscribirContext ctx) {
+        super.enterEscribir(ctx);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
 
     @Override
     public void enterBloquesi(pseint_grammar.BloquesiContext ctx) {
         super.enterBloquesi(ctx);
         Bloque si = new Bloque(TipoBloque.IF);
-        if (pilaActual.isEmpty())
+        if (tablaDeSimbolos.isEmpty())
         {
-            raizActual.addHijo(si);
+            tablaDeSimbolos.getRaizActual().addHijo(si);
         }
         else
         {
-            pilaActual.peek().addHijo(si);
+            tablaDeSimbolos.peek().addHijo(si);
         }
-        pilaActual.push(si);
+        tablaDeSimbolos.push(si);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
     }
 
     @Override
     public void exitBloquesi(pseint_grammar.BloquesiContext ctx) {
         super.exitBloquesi(ctx);
-        pilaActual.pop();
-        raizActual.sumarLineasEfectivas(1);
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
     }
 
     @Override
     public void enterBloqueno(pseint_grammar.BloquenoContext ctx) {
         super.enterBloqueno(ctx);
         Bloque no = new Bloque(TipoBloque.ELSE);
-        if (pilaActual.isEmpty())
+        if (tablaDeSimbolos.isEmpty())
         {
-            raizActual.addHijo(no);
+            tablaDeSimbolos.getRaizActual().addHijo(no);
         }
         else
         {
-            pilaActual.peek().addHijo(no);
+            tablaDeSimbolos.peek().addHijo(no);
         }
-        pilaActual.push(no);
+        tablaDeSimbolos.push(no);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
 
     @Override
     public void exitBloqueno(pseint_grammar.BloquenoContext ctx) {
         super.exitBloqueno(ctx);
-        raizActual.sumarLineasEfectivas(1);
-        pilaActual.pop();
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
     }
 
     @Override
     public void enterSegun(pseint_grammar.SegunContext ctx) {
         super.enterSegun(ctx);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
     }
-
-    @Override
-    public void exitSegun(pseint_grammar.SegunContext ctx) {
-        super.exitSegun(ctx);
-        raizActual.sumarLineasEfectivas(1);
-        pilaActual.pop();
-    }
-
     @Override
     public void enterCaso(pseint_grammar.CasoContext ctx) {
         super.enterCaso(ctx);
         Bloque caso = new Bloque(TipoBloque.CASO);
-        if (pilaActual.isEmpty())
+        if (tablaDeSimbolos.isEmpty())
         {
-            raizActual.addHijo(caso);
+            tablaDeSimbolos.getRaizActual().addHijo(caso);
         }
         else
         {
-            pilaActual.peek().addHijo(caso);
+            tablaDeSimbolos.peek().addHijo(caso);
         }
-        pilaActual.push(caso);
+        tablaDeSimbolos.push(caso);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
 
     @Override
     public void exitCaso(pseint_grammar.CasoContext ctx) {
         super.exitCaso(ctx);
-        pilaActual.pop();
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
     }
 
     @Override
     public void enterDeotromodo(pseint_grammar.DeotromodoContext ctx) {
         super.enterDeotromodo(ctx);
-        Bloque dom = new Bloque(TipoBloque.CASO);
-        if (pilaActual.isEmpty())
+        Bloque dom = new Bloque(TipoBloque.DEOTROMODO);
+        if (tablaDeSimbolos.isEmpty())
         {
-            raizActual.addHijo(dom);
+            tablaDeSimbolos.getRaizActual().addHijo(dom);
         }
         else
         {
-            pilaActual.peek().addHijo(dom);
+            tablaDeSimbolos.peek().addHijo(dom);
         }
-        pilaActual.push(dom);
+        tablaDeSimbolos.push(dom);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
 
     @Override
     public void exitDeotromodo(pseint_grammar.DeotromodoContext ctx) {
         super.exitDeotromodo(ctx);
-        pilaActual.pop();
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
     }
 
 
@@ -199,91 +193,101 @@ public class Listener extends pseint_grammarBaseListener {
     public void enterMientras(pseint_grammar.MientrasContext ctx) {
         super.enterMientras(ctx);
         Bloque mientras = new Bloque(TipoBloque.WHILE);
-        if (pilaActual.isEmpty())
+        if (tablaDeSimbolos.isEmpty())
         {
-            raizActual.addHijo(mientras);
+            tablaDeSimbolos.getRaizActual().addHijo(mientras);
         }
         else
         {
-            pilaActual.peek().addHijo(mientras);
+            tablaDeSimbolos.peek().addHijo(mientras);
         }
-        pilaActual.push(mientras);
+        tablaDeSimbolos.push(mientras);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
     }
 
     @Override
     public void exitMientras(pseint_grammar.MientrasContext ctx) {
         super.exitMientras(ctx);
-        pilaActual.pop();
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
     }
 
     @Override
     public void enterRepetir(pseint_grammar.RepetirContext ctx) {
         super.enterRepetir(ctx);
         Bloque repetir = new Bloque(TipoBloque.DOWHILE);
-        if (pilaActual.isEmpty())
+        if (tablaDeSimbolos.isEmpty())
         {
-            raizActual.addHijo(repetir);
+            tablaDeSimbolos.getRaizActual().addHijo(repetir);
         }
         else
         {
-            pilaActual.peek().addHijo(repetir);
+            tablaDeSimbolos.peek().addHijo(repetir);
         }
-        pilaActual.push(repetir);
+        tablaDeSimbolos.push(repetir);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
     }
 
     @Override
     public void exitRepetir(pseint_grammar.RepetirContext ctx) {
         super.exitRepetir(ctx);
-        pilaActual.pop();
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
     }
 
     @Override
     public void enterPara(pseint_grammar.ParaContext ctx) {
         super.enterPara(ctx);
         Bloque para = new Bloque(TipoBloque.FOR);
-        if (pilaActual.isEmpty())
+        if (tablaDeSimbolos.isEmpty())
         {
-            raizActual.addHijo(para);
+            tablaDeSimbolos.getRaizActual().addHijo(para);
         }
         else
         {
-            pilaActual.peek().addHijo(para);
+            tablaDeSimbolos.peek().addHijo(para);
         }
-        pilaActual.push(para);
+        tablaDeSimbolos.push(para);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
+        //Variable que recorre el bucle
+        tablaDeSimbolos.getRaizActual().sumarVariables(1);
     }
 
     @Override
     public void exitPara(pseint_grammar.ParaContext ctx) {
         super.exitPara(ctx);
-        pilaActual.pop();
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
     }
 
     @Override
     public void enterUsofuncion(pseint_grammar.UsofuncionContext ctx) {
 
         super.enterUsofuncion(ctx);
-    }
-
-    @Override
-    public void exitUsofuncion(pseint_grammar.UsofuncionContext ctx) {
-        super.exitUsofuncion(ctx);
-        raizActual.sumarLlamadas(1);
-        int parametros=ctx.operacion().size();
-        raizActual.sumarPuntuacion(2+parametros);
-        raizActual.sumarLineasEfectivas(1);
+        tablaDeSimbolos.getRaizActual().sumarLlamadas(1);
+        tablaDeSimbolos.getRaizActual().addFuncionLlamada(ctx.NOMBRE().getText());
+        tablaDeSimbolos.peek().sumarPuntuacion(2+ctx.operacion().size());
     }
 
     @Override
     public void enterConOperadores(pseint_grammar.ConOperadoresContext ctx) {
         super.enterConOperadores(ctx);
-        raizActual.sumarPuntuacion(1);
+        if(tablaDeSimbolos.isEmpty())
+        {
+            tablaDeSimbolos.getRaizActual().sumarPuntuacion(1);
+        }
+        else
+        {
+            tablaDeSimbolos.peek().sumarPuntuacion(1);
+        }
     }
 
     @Override
     public void exitPseint(pseint_grammar.PseintContext ctx) {
         super.exitPseint(ctx);
-        for(BloqueRaiz funcion: programa.values()){
-            puntuacionPrograma += funcion.getPuntuacion();
+        tablaDeSimbolos.sumarPuntuacion(tablaDeSimbolos.getPrograma().getPuntuacion());
+        for(BloqueRaiz funcion: tablaDeSimbolos.getFunciones()){
+            tablaDeSimbolos.sumarPuntuacion(funcion.getPuntuacion());
         }
     }
 }

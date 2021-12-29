@@ -1,4 +1,4 @@
-// Generated from H:/OneDrive/OneDrive - Universidad de Alcala/3º TERCERO/Procesardores del Lenguaje/Practica3/pecPDL/pec3/Pec3/src\pseint_grammar.g4 by ANTLR 4.9.2
+// Generated from /home/checo/Documentos/asignaturas/tercer curso/compiladores/pecPDL/pec3/Pec3/src/pseint_grammar.g4 by ANTLR 4.9.2
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -44,14 +44,7 @@ public class pseint_grammarBaseVisitor<T> extends AbstractParseTreeVisitor<T> im
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitBloqueFlujo(pseint_grammar.BloqueFlujoContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitBloqueVacio(pseint_grammar.BloqueVacioContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBloque(pseint_grammar.BloqueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
