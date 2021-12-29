@@ -3,12 +3,13 @@ import org.antlr.v4.runtime.tree.*;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class Main
 {
     public static void main(String[] args) throws Exception
     {
-        InputStream is = new FileInputStream("src/Programa.pseint");
+        InputStream is = new FileInputStream("H:\\OneDrive\\OneDrive - Universidad de Alcala\\3º TERCERO\\Procesardores del Lenguaje\\Practica3\\pecPDL\\pec3\\Pec3\\src\\Programa.pseint");
         CharStream input = CharStreams.fromStream(is);
         pseint_lexer lexer = new pseint_lexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -19,7 +20,18 @@ public class Main
         Listener listener = new Listener(tablaDeSimbolos);
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener,tree);
-        System.out.println(tablaDeSimbolos.getNombreFunciones());
+        imprimirHijos(tablaDeSimbolos.getPrograma().getListaHijos(),0);
+        //System.out.println("Nombre Funciones : "+tablaDeSimbolos.getPrograma().getHijos(0).getTipo());
     }
 
+    public static void imprimirHijos(ArrayList<Bloque> bloques, int n) {
+        for (Bloque bloque: bloques)
+        {
+            System.out.println("\t".repeat(n) + bloque.getTipo());
+            if (bloque.getTipo() != TipoBloque.ESTANDAR)
+            {
+                imprimirHijos(bloque.getHijos(), n+1);
+            }
+        }
+    }
 }

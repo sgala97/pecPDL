@@ -76,6 +76,10 @@ public class BloqueRaiz {
         hijos.add(bloque);
     }
 
+    public ArrayList<Bloque> getListaHijos() {
+        return hijos;
+    }
+
     public String getFuncionLlamadas(int i)
     {
         return funcionesLlamadas.get(i);

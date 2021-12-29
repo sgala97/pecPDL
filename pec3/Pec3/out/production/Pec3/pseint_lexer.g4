@@ -38,7 +38,7 @@ CPARENTESIS:')';
 ACORCHETE:'[';
 CCORCHETE:']';
 PUNTOCOMA: ';';
-SALTOLINEA: '\n';
+SALTOLINEA: '\r\n';
 COMA: ',';
 DOSPUNTOS: ':';
 
@@ -71,7 +71,7 @@ CADENA:(['"](ESCAPAR|~['"])*?['"]);
 
 
 //saltar
-COMENTARIOLINEA:('//'~[\n]*) -> skip;
+COMENTARIOLINEA:('//'~[\n\r]*) -> skip;
 COMENTARIOMULTILINEA:('/*'.*?'*/')-> skip;
 WS:[ \t]+ -> skip;
 //

@@ -22,6 +22,10 @@ Algoritmo DecirHola
 	Escribir 'vamos a por un while'
 	Mientras contador>0 Hacer
 		Escribir 'Ahora el contador es: ',contador
+		Mientras contador>0 Hacer
+        	Escribir 'Ahora el contador es: ',contador
+        	contador <- contador-1
+        FinMientras
 		contador <- contador-1
 	FinMientras
 	

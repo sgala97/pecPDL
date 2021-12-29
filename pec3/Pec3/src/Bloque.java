@@ -25,6 +25,10 @@ public class Bloque
         return puntuacion;
     }
 
+    public ArrayList<Bloque> getHijos(){
+        return hijos;
+    }
+
     public void setPuntuacionDeHijos()
     {
         for(Bloque bloque: hijos) {
