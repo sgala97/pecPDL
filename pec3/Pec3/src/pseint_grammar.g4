@@ -29,6 +29,7 @@ leer: LEER NOMBRE (COMA NOMBRE)* fininstruccion;
 
 bloquesi: bloque+;
 bloqueno: bloque+;
+
 sientonces: SI operacion ENTONCES fininstruccion
     bloquesi
     (SINO fininstruccion bloqueno)?

@@ -93,7 +93,7 @@ public class BloqueRaiz {
     public void setPuntuacionesHijos()
     {
         for(Bloque bloque: hijos) {
-            if (bloque.getTipo() != TipoBloque.ESTANDAR)
+            if (bloque.getTipo() != TipoBloque.STANDARD)
             {
                 puntuacion += Math.pow(bloque.getPuntuacion(), 2);
             }

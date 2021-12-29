@@ -5,8 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class Main
-{
+public class Main {
     public static void main(String[] args) throws Exception
     {
         InputStream is = new FileInputStream("H:\\OneDrive\\OneDrive - Universidad de Alcala\\3º TERCERO\\Procesardores del Lenguaje\\Practica3\\pecPDL\\pec3\\Pec3\\src\\Programa.pseint");
@@ -24,11 +23,13 @@ public class Main
         //System.out.println("Nombre Funciones : "+tablaDeSimbolos.getPrograma().getHijos(0).getTipo());
     }
 
+
+
     public static void imprimirHijos(ArrayList<Bloque> bloques, int n) {
         for (Bloque bloque: bloques)
         {
             System.out.println("\t".repeat(n) + bloque.getTipo());
-            if (bloque.getTipo() != TipoBloque.ESTANDAR)
+            if (bloque.getTipo() != TipoBloque.STANDARD)
             {
                 imprimirHijos(bloque.getHijos(), n+1);
             }

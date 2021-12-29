@@ -1,10 +1,12 @@
 public enum TipoBloque {
 
-    ESTANDAR,
+    STANDARD,
+    IFELSE,
     IF,
     ELSE,
-    CASO,
-    DEOTROMODO,
+    SWITHCASE,
+    CASE,
+    DEFAULT,
     FOR,
     WHILE,
     DOWHILE

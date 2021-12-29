@@ -46,7 +46,7 @@ public class Listener extends pseint_grammarBaseListener {
         super.enterBloqueEstandar(ctx);
         //Crea un bloque estandar y lo introduce en la raiz si la pila está vacía
         //o en la cabeza de la pila
-        Bloque bloque = new Bloque(TipoBloque.ESTANDAR);
+        Bloque bloque = new Bloque(TipoBloque.STANDARD);
         if (tablaDeSimbolos.isEmpty())
         {
             tablaDeSimbolos.getRaizActual().addHijo(bloque);
@@ -92,19 +92,34 @@ public class Listener extends pseint_grammarBaseListener {
     }
 
     @Override
-    public void enterBloquesi(pseint_grammar.BloquesiContext ctx) {
-        super.enterBloquesi(ctx);
-        Bloque si = new Bloque(TipoBloque.IF);
-        if (tablaDeSimbolos.isEmpty())
+    public void enterSientonces(pseint_grammar.SientoncesContext ctx) {
+        super.enterSientonces(ctx);
+        Bloque siEntonces = new Bloque(TipoBloque.IFELSE);
+        if(tablaDeSimbolos.isEmpty())
         {
-            tablaDeSimbolos.getRaizActual().addHijo(si);
+            tablaDeSimbolos.getRaizActual().addHijo(siEntonces);
         }
         else
         {
-            tablaDeSimbolos.peek().addHijo(si);
+            tablaDeSimbolos.peek().addHijo(siEntonces);
         }
-        tablaDeSimbolos.push(si);
+        tablaDeSimbolos.push(siEntonces);
         tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
+    }
+
+    @Override
+    public void exitSientonces(pseint_grammar.SientoncesContext ctx) {
+        super.exitSientonces(ctx);
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
+    }
+
+    @Override
+    public void enterBloquesi(pseint_grammar.BloquesiContext ctx) {
+        super.enterBloquesi(ctx);
+        Bloque si = new Bloque(TipoBloque.IF);
+        tablaDeSimbolos.peek().addHijo(si);
+        tablaDeSimbolos.push(si);
     }
 
     @Override
@@ -118,14 +133,7 @@ public class Listener extends pseint_grammarBaseListener {
     public void enterBloqueno(pseint_grammar.BloquenoContext ctx) {
         super.enterBloqueno(ctx);
         Bloque no = new Bloque(TipoBloque.ELSE);
-        if (tablaDeSimbolos.isEmpty())
-        {
-            tablaDeSimbolos.getRaizActual().addHijo(no);
-        }
-        else
-        {
-            tablaDeSimbolos.peek().addHijo(no);
-        }
+        tablaDeSimbolos.peek().addHijo(no);
         tablaDeSimbolos.push(no);
         tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
@@ -140,20 +148,31 @@ public class Listener extends pseint_grammarBaseListener {
     @Override
     public void enterSegun(pseint_grammar.SegunContext ctx) {
         super.enterSegun(ctx);
-        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
-    }
-    @Override
-    public void enterCaso(pseint_grammar.CasoContext ctx) {
-        super.enterCaso(ctx);
-        Bloque caso = new Bloque(TipoBloque.CASO);
-        if (tablaDeSimbolos.isEmpty())
+        Bloque segun = new Bloque(TipoBloque.SWITHCASE);
+        if(tablaDeSimbolos.isEmpty())
         {
-            tablaDeSimbolos.getRaizActual().addHijo(caso);
+            tablaDeSimbolos.getRaizActual().addHijo(segun);
         }
         else
         {
-            tablaDeSimbolos.peek().addHijo(caso);
+            tablaDeSimbolos.peek().addHijo(segun);
         }
+        tablaDeSimbolos.push(segun);
+        tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
+    }
+
+    @Override
+    public void exitSegun(pseint_grammar.SegunContext ctx) {
+        super.exitSegun(ctx);
+        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.pop();
+    }
+
+    @Override
+    public void enterCaso(pseint_grammar.CasoContext ctx) {
+        super.enterCaso(ctx);
+        Bloque caso = new Bloque(TipoBloque.CASE);
+        tablaDeSimbolos.peek().addHijo(caso);
         tablaDeSimbolos.push(caso);
         tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
@@ -168,15 +187,8 @@ public class Listener extends pseint_grammarBaseListener {
     @Override
     public void enterDeotromodo(pseint_grammar.DeotromodoContext ctx) {
         super.enterDeotromodo(ctx);
-        Bloque dom = new Bloque(TipoBloque.DEOTROMODO);
-        if (tablaDeSimbolos.isEmpty())
-        {
-            tablaDeSimbolos.getRaizActual().addHijo(dom);
-        }
-        else
-        {
-            tablaDeSimbolos.peek().addHijo(dom);
-        }
+        Bloque dom = new Bloque(TipoBloque.DEFAULT);
+        tablaDeSimbolos.peek().addHijo(dom);
         tablaDeSimbolos.push(dom);
         tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(1);
     }
@@ -271,15 +283,7 @@ public class Listener extends pseint_grammarBaseListener {
 
     @Override
     public void enterConOperadores(pseint_grammar.ConOperadoresContext ctx) {
-        super.enterConOperadores(ctx);
-        if(tablaDeSimbolos.isEmpty())
-        {
-            tablaDeSimbolos.getRaizActual().sumarPuntuacion(1);
-        }
-        else
-        {
             tablaDeSimbolos.peek().sumarPuntuacion(1);
-        }
     }
 
     @Override
