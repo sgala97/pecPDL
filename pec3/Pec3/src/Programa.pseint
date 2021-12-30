@@ -10,7 +10,7 @@ Algoritmo DecirHola
 	SiNo
 		Escribir 'Ups, este programa es para Antonio, sal de aqu�...!'
 	FinSi
-	
+
 	/** Esto es un
 	comentario
 	multilinea **/
@@ -18,7 +18,7 @@ Algoritmo DecirHola
 	Para contador<-0 Hasta 10 Hacer
 		Escribir 'Nos damos vuelta, y estamos en la vuelta ',contador
 	FinPara
-	
+
 	Escribir 'vamos a por un while'
 	Mientras contador>0 Hacer
 		Escribir 'Ahora el contador es: ',contador
@@ -28,14 +28,14 @@ Algoritmo DecirHola
         FinMientras
 		contador <- contador-1
 	FinMientras
-	
+
 	Escribir 'vamos a por un repeat'
 	Repetir
 		Escribir 'El contador ahora mismo al empezar es: ',contador
 		contador <- contador+1
 		Escribir 'El contador al acabar la vuelta es: ',contador
 	Hasta Que contador>10
-	
+
 	Escribir 'vamos a por un switch'
 	Segun contador  Hacer
 		0:
