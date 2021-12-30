@@ -141,6 +141,14 @@ public class Grafo {
 
 
     }
+    private void generarGrafoLlamadas()
+    {
+        for(String string:bloqueRaiz.getLlamadas())
+        {
+
+        }
+    }
+
     private void initGrafo()
     {
         grafo += "digraph G{ inicio";

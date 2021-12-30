@@ -129,7 +129,7 @@ public class Listener extends pseint_grammarBaseListener
     {
         super.exitSientonces(ctx);
 
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
@@ -146,7 +146,7 @@ public class Listener extends pseint_grammarBaseListener
     public void exitBloquesi(pseint_grammar.BloquesiContext ctx)
     {
         super.exitBloquesi(ctx);
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
@@ -164,7 +164,7 @@ public class Listener extends pseint_grammarBaseListener
     public void exitBloqueno(pseint_grammar.BloquenoContext ctx)
     {
         super.exitBloqueno(ctx);
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
@@ -189,7 +189,7 @@ public class Listener extends pseint_grammarBaseListener
     public void exitSegun(pseint_grammar.SegunContext ctx)
     {
         super.exitSegun(ctx);
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
@@ -207,7 +207,7 @@ public class Listener extends pseint_grammarBaseListener
     public void exitCaso(pseint_grammar.CasoContext ctx)
     {
         super.exitCaso(ctx);
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
@@ -225,7 +225,7 @@ public class Listener extends pseint_grammarBaseListener
     public void exitDeotromodo(pseint_grammar.DeotromodoContext ctx)
     {
         super.exitDeotromodo(ctx);
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
@@ -251,7 +251,7 @@ public class Listener extends pseint_grammarBaseListener
     public void exitMientras(pseint_grammar.MientrasContext ctx)
     {
         super.exitMientras(ctx);
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
@@ -276,7 +276,7 @@ public class Listener extends pseint_grammarBaseListener
     public void exitRepetir(pseint_grammar.RepetirContext ctx)
     {
         super.exitRepetir(ctx);
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
@@ -295,14 +295,13 @@ public class Listener extends pseint_grammarBaseListener
         }
         tablaDeSimbolos.push(para);
         tablaDeSimbolos.getRaizActual().sumarLineasEfectivas(2);
-        //Variable que recorre el bucle
     }
 
     @Override
     public void exitPara(pseint_grammar.ParaContext ctx)
     {
         super.exitPara(ctx);
-        tablaDeSimbolos.peek().setPuntuacionDeHijos();
+        tablaDeSimbolos.peek().setPuntuacionesHijos();
         tablaDeSimbolos.pop();
     }
 
