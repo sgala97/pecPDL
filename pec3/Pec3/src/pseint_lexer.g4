@@ -38,7 +38,7 @@ CPARENTESIS:')';
 ACORCHETE:'[';
 CCORCHETE:']';
 PUNTOCOMA: ';';
-SALTOLINEA: '\r\n';
+SALTOLINEA: '\r\n' | '\n';
 COMA: ',';
 DOSPUNTOS: ':';
 

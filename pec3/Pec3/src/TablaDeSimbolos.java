@@ -8,23 +8,13 @@ public class TablaDeSimbolos
     private BloqueRaiz raizActual;
     private Stack<Bloque> pilaActual = new Stack<>();
 
-    public BloqueRaiz getFuncion(String clave)
+    public void addFuncion(String nombre, BloqueRaiz bloqueRaiz)
     {
-        return funciones.get(clave);
+        funciones.put(nombre, bloqueRaiz);
     }
-    public ArrayList<BloqueRaiz> getFunciones()
+    public HashMap<String, BloqueRaiz> getFunciones()
     {
-        return new ArrayList<>(funciones.values());
-    }
-
-    public ArrayList<String> getNombreFunciones()
-    {
-        return new ArrayList<>(funciones.keySet());
-    }
-
-    public void addFuncion(String clave, BloqueRaiz bloqueRaiz)
-    {
-        funciones.put(clave, bloqueRaiz);
+        return funciones;
     }
 
     public BloqueRaiz getPrograma()

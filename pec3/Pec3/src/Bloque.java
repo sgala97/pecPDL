@@ -29,16 +29,21 @@ public class Bloque
         return hijos;
     }
 
-    public void setPuntuacionDeHijos()
+    public void setPuntuacionesHijos()
     {
-        for(Bloque bloque: hijos) {
-            if (bloque.getTipo() != TipoBloque.STANDARD)
+        for (Bloque bloque : hijos)
+        {
+            if (bloque.getTipo() == TipoBloque.STANDARD ||
+                    bloque.getTipo() == TipoBloque.IF ||
+                    bloque.getTipo() == TipoBloque.ELSE ||
+                    bloque.getTipo() == TipoBloque.CASE ||
+                    bloque.getTipo() == TipoBloque.DEFAULT)
             {
-                puntuacion += Math.pow(bloque.getPuntuacion(), 2);
+                puntuacion += bloque.getPuntuacion();
             }
             else
             {
-                puntuacion += bloque.getPuntuacion();
+                puntuacion += Math.pow(bloque.getPuntuacion(), 2);
             }
         }
     }

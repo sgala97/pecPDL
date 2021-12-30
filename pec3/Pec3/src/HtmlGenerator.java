@@ -12,36 +12,70 @@ public class HtmlGenerator {
             f.createNewFile();
 
             BufferedWriter html= new BufferedWriter(new FileWriter("./html/index.html"));
-            html.write("<!DOCTYPE html>\n" +
-                    "<head>\n" +
-                    "    <title>PEC3</title>\n" +
-                    "    <style>" +
-                    "        body {\n" +
-                    "        background-color: rgb(211,234,228) ;\n" +
-                    "        }" +
-                    "        hr.rounded {\n" +
-                    "        border-top: 8px solid #bbb;\n" +
-                    "        border-radius: 5px;\n" +
-                    "        }\n" +
-                    "</style>"+
-                    "</head>\n" +
-                    "<body>\n");
-            int i=0;
-            for(Grafo grafo:grafos) {
-                String variables= String.valueOf(grafo.getVariables());
-                String llamadas= String.valueOf(grafo.getLlamadas());
-                String complejidad= String.valueOf(grafo.getComplejidad());
-                String parametros= String.valueOf(grafo.getParametros());
-                String lineas= String.valueOf(grafo.getLineasEfectivas());
-                html.write( "<hr class=\"rounded\">" +
+            html.write("""
+                    <!DOCTYPE html>
+                    <head>
+                        <title>PEC3</title>
+                        <style>        body {
+                            background-color: rgb(211,234,228) ;
+                            }        hr.rounded {
+                            border-top: 8px solid #bbb;
+                            border-radius: 5px;
+                            }
+                    </style></head>
+                    <body>
+                    """);
+
+            String complejidad;
+            String puntuacion;
+            String lineas;
+            String variables;
+            String llamadas;
+            String numParametros;
+            String parametros;
+            String retorno;
+            String nombre;
+
+            complejidad= String.valueOf(grafos.get(0).getComplejidad());
+            puntuacion= String.valueOf(grafos.get(0).getInfoGrafo().getPuntuacion());
+            lineas= String.valueOf(grafos.get(0).getInfoGrafo().getLineasEfectivas());
+            nombre= String.valueOf(grafos.get(0).getInfoGrafo().getNombre());
+            html.write( "<hr class=\"rounded\">\n" +
+                    "<h1>"+ nombre + "</h1>\n" +
+                    "<h2> Complejidad: "+complejidad+"</h2>\n"+
+                    "<h2> Puntuacion: "+puntuacion+"</h2>\n"+
+                    "<h2> Lineas de codigo efectivas: "+lineas+"</h2>\n"+
+                    "<img src=\"./"+String.valueOf(0)+".svg\" width=\"70%\" alt=\"grafo\">\n <hr class=\"rounded\">");
+
+
+            for(int i = 1; i<grafos.size(); i++)
+            {
+                nombre= String.valueOf(grafos.get(i).getInfoGrafo().getNombre());
+
+                parametros = "";
+                for(String nombreParametro: grafos.get(i).getInfoGrafo().getParametros())
+                {
+                    parametros+= nombreParametro +",";
+                }
+                parametros = parametros.substring(0,parametros.length()-1);
+
+                retorno= String.valueOf(grafos.get(i).getInfoGrafo().getRetorno());
+                variables= String.valueOf(grafos.get(i).getInfoGrafo().getVariables());
+                complejidad= String.valueOf(grafos.get(i).getComplejidad());
+                puntuacion= String.valueOf(grafos.get(i).getInfoGrafo().getPuntuacion());
+                llamadas= String.valueOf(grafos.get(i).getInfoGrafo().getNumeroLlamadas());
+                numParametros= String.valueOf(grafos.get(i).getInfoGrafo().getNumeroParametros());
+                lineas= String.valueOf(grafos.get(i).getInfoGrafo().getLineasEfectivas());
+
+                html.write( "<hr class=\"rounded\">\n" +
+                        "<h1>"+ nombre + "("+ parametros + "): " + retorno + "</h1>\n" +
                         "<h2> Complejidad: "+complejidad+"</h2>\n"+
+                        "<h2> Puntuacion: "+puntuacion+"</h2>\n"+
                         "<h2> Variables declaradas: "+variables+"</h2>\n"+
                         "<h2> Llamadas a funciones: "+llamadas+"</h2>\n"+
-                        "<h2> Parametros: "+parametros+"</h2>\n"+
+                        "<h2> Parametros: "+numParametros+"</h2>\n"+
                         "<h2> Lineas de codigo efectivas: "+lineas+"</h2>\n"+
                         "<img src=\"./"+String.valueOf(i)+".svg\" width=\"70%\" alt=\"grafo\">\n <hr class=\"rounded\">");
-
-                i++;
             }
 
             html.write("</body>\n" +

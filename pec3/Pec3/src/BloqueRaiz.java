@@ -1,13 +1,41 @@
 import java.util.ArrayList;
 
-public class BloqueRaiz {
-    private int puntuacion = 0, variables = 0, parametros = 0, lineasEfectivas = 0, llamadas = 0;
+public class BloqueRaiz
+{
+    private String nombre, retorno;
+    private int puntuacion = 0, variables = 0, lineasEfectivas = 0;
     private ArrayList<Bloque> hijos = new ArrayList<>();
-    private ArrayList<String> funcionesLlamadas = new ArrayList<>();
+    private ArrayList<String> llamadas = new ArrayList<>();
+    private ArrayList<String> parametros = new ArrayList<>();
+
+    public String getNombre()
+    {
+        return nombre;
+    }
+
+    public void setNombre(String nombre)
+    {
+        this.nombre = nombre;
+    }
+
+    public String getRetorno()
+    {
+        return retorno;
+    }
+
+    public void setRetorno(String retorno)
+    {
+        this.retorno = retorno;
+    }
 
     public void sumarPuntuacion(int n)
     {
         puntuacion += n;
+    }
+
+    public int getPuntuacion()
+    {
+        return puntuacion;
     }
 
     public void sumarVariables(int n)
@@ -15,9 +43,9 @@ public class BloqueRaiz {
         variables += n;
     }
 
-    public void sumarParametros(int n)
+    public int getVariables()
     {
-        parametros += n;
+        return variables;
     }
 
     public void sumarLineasEfectivas(int n)
@@ -25,50 +53,9 @@ public class BloqueRaiz {
         lineasEfectivas += n;
     }
 
-    public void sumarLlamadas(int n)
+    public int getLineasEfectivas()
     {
-        llamadas += n;
-    }
-
-    public int getPuntuacion() {
-        return puntuacion;
-    }
-
-    public int getVariables() {
-        return variables;
-    }
-
-    public void setVariables(int variables) {
-        this.variables = variables;
-    }
-
-    public int getParametros() {
-        return parametros;
-    }
-
-    public void setParametros(int parametros) {
-        this.parametros = parametros;
-    }
-
-    public int getLineasEfectivas() {
         return lineasEfectivas;
-    }
-
-    public void setLineasEfectivas(int lineasEfectivas) {
-        this.lineasEfectivas = lineasEfectivas;
-    }
-
-    public int getLlamadas() {
-        return llamadas;
-    }
-
-    public void setLlamadas(int llamadas) {
-        this.llamadas = llamadas;
-    }
-
-    public Bloque getHijos(int i)
-    {
-        return hijos.get(i);
     }
 
     public void addHijo(Bloque bloque)
@@ -76,30 +63,56 @@ public class BloqueRaiz {
         hijos.add(bloque);
     }
 
-    public ArrayList<Bloque> getListaHijos() {
+    public ArrayList<Bloque> getHijos()
+    {
         return hijos;
     }
 
-    public String getFuncionLlamadas(int i)
+    public void addLlamada(String llamada)
     {
-        return funcionesLlamadas.get(i);
+        llamadas.add(llamada);
     }
 
-    public void addFuncionLlamada(String llamada)
+    public ArrayList<String> getLlamadas()
     {
-        funcionesLlamadas.add(llamada);
+        return llamadas;
+    }
+
+    public int getNumeroLlamadas()
+    {
+        return llamadas.size();
+    }
+
+    public void addParametro(String parametro)
+    {
+        parametros.add(parametro);
+    }
+
+    public ArrayList<String> getParametros()
+    {
+        return parametros;
+    }
+
+    public int getNumeroParametros()
+    {
+        return parametros.size();
     }
 
     public void setPuntuacionesHijos()
     {
-        for(Bloque bloque: hijos) {
-            if (bloque.getTipo() != TipoBloque.STANDARD)
+        for (Bloque bloque : hijos)
+        {
+            if (bloque.getTipo() == TipoBloque.STANDARD ||
+                bloque.getTipo() == TipoBloque.IF ||
+                bloque.getTipo() == TipoBloque.ELSE ||
+                bloque.getTipo() == TipoBloque.CASE ||
+                bloque.getTipo() == TipoBloque.DEFAULT)
             {
-                puntuacion += Math.pow(bloque.getPuntuacion(), 2);
+                puntuacion += bloque.getPuntuacion();
             }
             else
             {
-                puntuacion += bloque.getPuntuacion();
+                puntuacion += Math.pow(bloque.getPuntuacion(), 2);
             }
         }
     }

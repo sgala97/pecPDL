@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 public class Grafo {
 
@@ -16,7 +13,7 @@ public class Grafo {
     }
     public String generarGrafo(){
         initGrafo();
-        for(Bloque hijo:bloqueRaiz.getListaHijos())
+        for(Bloque hijo:bloqueRaiz.getHijos())
         {
             recorrerArbol(hijo);
         }
@@ -168,22 +165,11 @@ public class Grafo {
     }
 
     public int getComplejidad(){
-        return aristas-nodos.size()+2;
+        return aristas-nodos.size();
     }
 
-    public int getVariables(){
-        return bloqueRaiz.getVariables();
-    }
-
-    public int getParametros(){
-        return bloqueRaiz.getParametros();
-    }
-
-    public int getLineasEfectivas(){
-        return bloqueRaiz.getLineasEfectivas();
-    }
-
-    public int getLlamadas(){
-        return bloqueRaiz.getLlamadas();
+    public BloqueRaiz getInfoGrafo()
+    {
+        return bloqueRaiz;
     }
 }
