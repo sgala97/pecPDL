@@ -26,12 +26,14 @@ public class Main {
         List<Grafo> grafos= new ArrayList<>();
         Grafo grafo = new Grafo(tablaDeSimbolos.getPrograma());
         grafos.add(grafo);
+        grafo = new Grafo(tablaDeSimbolos.getPrograma());
+        grafos.add(grafo);
         for(BloqueRaiz bloqueRaiz : tablaDeSimbolos.getFunciones().values())
         {
             grafo = new Grafo(bloqueRaiz);
             grafos.add(grafo);
         }
-        HtmlGenerator.generate(grafos);
+        HtmlGenerator.generate(grafos, tablaDeSimbolos.getFunciones());
 
     }
 

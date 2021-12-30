@@ -1,12 +1,13 @@
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.List;
 
 public class HtmlGenerator {
 
-    public static void generate(List<Grafo> grafos){
-        crearDotSvg(grafos);
+    public static void generate(List<Grafo> grafos, HashMap<String, BloqueRaiz> funciones){
+        crearDotSvg(grafos, funciones);
         File f = new File( "./html/index.html");
         try {
             f.createNewFile();
@@ -36,19 +37,20 @@ public class HtmlGenerator {
             String retorno;
             String nombre;
 
-            complejidad= String.valueOf(grafos.get(0).getComplejidad());
-            puntuacion= String.valueOf(grafos.get(0).getInfoGrafo().getPuntuacion());
-            lineas= String.valueOf(grafos.get(0).getInfoGrafo().getLineasEfectivas());
-            nombre= String.valueOf(grafos.get(0).getInfoGrafo().getNombre());
+            complejidad= String.valueOf(grafos.get(1).getComplejidad());
+            puntuacion= String.valueOf(grafos.get(1).getInfoGrafo().getPuntuacion());
+            lineas= String.valueOf(grafos.get(1).getInfoGrafo().getLineasEfectivas());
+            nombre= String.valueOf(grafos.get(1).getInfoGrafo().getNombre());
             html.write( "<hr class=\"rounded\">\n" +
                     "<h1>"+ nombre + "</h1>\n" +
                     "<h2> Complejidad: "+complejidad+"</h2>\n"+
                     "<h2> Puntuacion: "+puntuacion+"</h2>\n"+
                     "<h2> Lineas de codigo efectivas: "+lineas+"</h2>\n"+
-                    "<img src=\"./"+String.valueOf(0)+".svg\" width=\"70%\" alt=\"grafo\">\n <hr class=\"rounded\">");
+                    "<img src=\"./"+String.valueOf(1)+".svg\" width=\"100%\" alt=\"grafo\">\n"+
+                    "<img src=\"./"+String.valueOf(0)+".svg\" width=\"100%\" alt=\"grafo\">\n <hr class=\"rounded\">");
 
 
-            for(int i = 1; i<grafos.size(); i++)
+            for(int i = 2; i<grafos.size(); i++)
             {
                 nombre= String.valueOf(grafos.get(i).getInfoGrafo().getNombre());
 
@@ -75,7 +77,7 @@ public class HtmlGenerator {
                         "<h2> Llamadas a funciones: "+llamadas+"</h2>\n"+
                         "<h2> Parametros: "+numParametros+"</h2>\n"+
                         "<h2> Lineas de codigo efectivas: "+lineas+"</h2>\n"+
-                        "<img src=\"./"+String.valueOf(i)+".svg\" width=\"70%\" alt=\"grafo\">\n <hr class=\"rounded\">");
+                        "<img src=\"./"+String.valueOf(i)+".svg\" width=\"100%\" alt=\"grafo\">\n <hr class=\"rounded\">");
             }
 
             html.write("</body>\n" +
@@ -86,12 +88,20 @@ public class HtmlGenerator {
 
 
     }
-    public static void crearDotSvg(List<Grafo> grafos){
-        int i=0;
+    public static void crearDotSvg(List<Grafo> grafos, HashMap<String, BloqueRaiz> funciones){
         File directorioHtml= new File("./html");
         directorioHtml.mkdir();
-        for(Grafo grafo : grafos) {
-            String strGrafo= grafo.generarGrafo();
+        for(int i = 0; i<grafos.size(); i++) {
+            String strGrafo;
+            if(i==0)
+            {
+                strGrafo = grafos.get(i).generarGrafoLlamadas(funciones);
+            }
+            else
+            {
+                strGrafo= grafos.get(i).generarGrafo();
+            }
+
             String nombre=String.valueOf(i);
             File grafoDot =  new File("./"+nombre+".dot");
             try {
@@ -100,7 +110,6 @@ public class HtmlGenerator {
                 fw.close();
                 Runtime.getRuntime().exec("dot -Tsvg ./html/" +nombre+".dot -o ./html/"+nombre+".svg -Gbgcolor=transparent -Grankdir=LR");
             }catch (Exception e){}
-        i++;
         }
     }
 

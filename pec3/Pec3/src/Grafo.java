@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Grafo {
@@ -7,6 +9,7 @@ public class Grafo {
     private int aristas = 0;
     private String grafo = "";
     private BloqueRaiz bloqueRaiz;
+    private HashMap<Integer, String> etiquetas = new HashMap<>();
 
     public Grafo(BloqueRaiz bloque){
         bloqueRaiz=bloque;
@@ -60,6 +63,7 @@ public class Grafo {
     private void addEstandar()
     {
         addArista();
+        addEtiquetas(contador,"standard");
         addNodo(contador++);
     }
 
@@ -68,6 +72,7 @@ public class Grafo {
         //nodo condicion
         int nodoInicialAux = contador;
         addArista();
+        addEtiquetas(contador,"condition");
         addNodo(contador++);
         //nodo if
         subBloque(bloque.getHijos().get(0));
@@ -141,11 +146,34 @@ public class Grafo {
 
 
     }
-    private void generarGrafoLlamadas()
+
+    public String generarGrafoLlamadas(HashMap<String, BloqueRaiz> funciones)
     {
+        grafo += "digraph G{";
         for(String string:bloqueRaiz.getLlamadas())
         {
+            grafo += "algoritmo";
+            addArista();
+            addEtiquetas(contador, string);
+            addNodo(contador);
+            addFinSubGrafo();
+            subGrafoLlamadas(contador++, funciones.get(string), funciones);
+        }
+        transformarEtiquetas();
+        grafo += "}";
+        return grafo;
+    }
 
+    private void subGrafoLlamadas(int nodo, BloqueRaiz bloqueRaiz ,HashMap<String, BloqueRaiz> funciones)
+    {
+        for(String string: bloqueRaiz.getLlamadas())
+        {
+            addNodo(nodo);
+            addArista();
+            addEtiquetas(contador, string);
+            addNodo(contador);
+            addFinSubGrafo();
+            subGrafoLlamadas(contador++, funciones.get(string), funciones);
         }
     }
 
@@ -157,7 +185,9 @@ public class Grafo {
     private void endGrafo()
     {
         addArista();
-        grafo += "fin;}";
+        grafo += "fin;";
+        transformarEtiquetas();
+        grafo += "}";
     }
 
     private void addFinSubGrafo(){
@@ -170,6 +200,19 @@ public class Grafo {
     private void addNodo(int nodo){
         nodos.add(nodo);
         grafo += String.valueOf(nodo);
+    }
+
+    private void addEtiquetas(int n, String nombre)
+    {
+        etiquetas.put(n,nombre);
+    }
+
+    private void transformarEtiquetas()
+    {
+        for(int n: this.etiquetas.keySet())
+        {
+            grafo += String.valueOf(n) + "[label = " + this.etiquetas.get(n) + "] ";
+        }
     }
 
     public int getComplejidad(){
