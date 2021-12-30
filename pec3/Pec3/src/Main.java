@@ -1,9 +1,12 @@
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception
@@ -21,16 +24,17 @@ public class Main {
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener,tree);
         imprimirHijos(tablaDeSimbolos.getPrograma().getListaHijos(),0);
-        Grafo grafo = new Grafo();
-        grafo.generarGrafo(tablaDeSimbolos.getPrograma());
-           //System.out.println("Nombre Funciones : "+tablaDeSimbolos.getPrograma().getHijos(0).getTipo());
+        //LISTA DE GRAFOS QUE DESEAMOS CREAR
+        List<Grafo> grafos= new ArrayList<>();
+        Grafo grafo = new Grafo(tablaDeSimbolos.getPrograma());
+        grafos.add(grafo);
+        grafos.add(grafo);
+        HtmlGenerator.generate(grafos);
+
     }
 
 
-    public static String a(int a){
 
-        return String.valueOf(a);
-    }
     public static void imprimirHijos(ArrayList<Bloque> bloques, int n) {
         for (Bloque bloque: bloques)
         {

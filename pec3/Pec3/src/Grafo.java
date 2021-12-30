@@ -9,18 +9,19 @@ public class Grafo {
     private HashSet<Integer> nodos = new HashSet<>();
     private int aristas = 0;
     private String grafo = "";
+    private BloqueRaiz bloqueRaiz;
 
-    public Grafo(){
-
+    public Grafo(BloqueRaiz bloque){
+        bloqueRaiz=bloque;
     }
-    public void generarGrafo(BloqueRaiz bloqueRaiz){
+    public String generarGrafo(){
         initGrafo();
         for(Bloque hijo:bloqueRaiz.getListaHijos())
         {
             recorrerArbol(hijo);
         }
         endGrafo();
-        System.out.println(grafo);
+        return grafo;
 
     }
 
@@ -167,6 +168,22 @@ public class Grafo {
     }
 
     public int getComplejidad(){
-        return nodos.size()-aristas+2;
+        return aristas-nodos.size()+2;
+    }
+
+    public int getVariables(){
+        return bloqueRaiz.getVariables();
+    }
+
+    public int getParametros(){
+        return bloqueRaiz.getParametros();
+    }
+
+    public int getLineasEfectivas(){
+        return bloqueRaiz.getLineasEfectivas();
+    }
+
+    public int getLlamadas(){
+        return bloqueRaiz.getLlamadas();
     }
 }
