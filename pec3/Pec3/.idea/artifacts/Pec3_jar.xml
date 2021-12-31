@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Pec3:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Pec3_jar</output-path>
+    <root id="archive" name="Pec3.jar">
+      <element id="module-output" name="Pec3" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/.idea/libraries/antlr-4.9.3-complete.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
