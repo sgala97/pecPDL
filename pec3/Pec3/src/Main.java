@@ -9,8 +9,15 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws Exception
     {
-
-        InputStream is = new FileInputStream("src/Programa.pseint");
+        String html="", rutaPrograma="", funcion="";
+        if(args.length == 3)
+        {
+            rutaPrograma = args[0];
+            funcion = args[1];
+            html = args[2];
+        }
+        else System.exit(-1);
+        InputStream is = new FileInputStream(rutaPrograma);
         CharStream input = CharStreams.fromStream(is);
         pseint_lexer lexer = new pseint_lexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -24,7 +31,7 @@ public class Main {
         imprimirHijos(tablaDeSimbolos.getPrograma().getHijos(),0);
         //LISTA DE GRAFOS QUE DESEAMOS CREAR
         List<Grafo> grafos= new ArrayList<>();
-        Grafo grafo = new Grafo(tablaDeSimbolos);
+        Grafo grafo = new Grafo(tablaDeSimbolos, funcion);
         grafos.add(grafo);
         grafo = new Grafo(tablaDeSimbolos.getPrograma());
         grafos.add(grafo);
@@ -33,7 +40,7 @@ public class Main {
             grafo = new Grafo(bloqueRaiz);
             grafos.add(grafo);
         }
-        HtmlGenerator.generate(grafos);
+        HtmlGenerator.generate(grafos, html);
 
     }
 

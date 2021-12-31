@@ -6,18 +6,17 @@ import java.util.List;
 
 public class HtmlGenerator {
 
-    public static void generate(List<Grafo> grafos){
+    public static void generate(List<Grafo> grafos, String nameHtml){
         crearDotSvg(grafos);
         for(Grafo grafo: grafos.subList(1,grafos.size()))
         {
             grafos.get(0).getInfoTabla().sumarPuntuacionCiclomatica(grafo.getComplejidad());
         }
 
-        File f = new File( "./html/index.html");
         try {
-            f.createNewFile();
+            FileWriter f = new FileWriter( "./html/"+nameHtml);
 
-            BufferedWriter html= new BufferedWriter(new FileWriter("./html/index.html"));
+            BufferedWriter html= new BufferedWriter(f);
             html.write("""
                     <!DOCTYPE html>
                     <head>

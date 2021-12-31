@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Grafo {
 
@@ -16,9 +17,20 @@ public class Grafo {
         bloqueRaiz=bloque;
     }
 
-    public Grafo(TablaDeSimbolos tablaDeSimbolos){
+    public Grafo(TablaDeSimbolos tablaDeSimbolos, String nombreFuncion){
         this.tablaDeSimbolos=tablaDeSimbolos;
-        bloqueRaiz = tablaDeSimbolos.getPrograma();
+        if(nombreFuncion.equals(tablaDeSimbolos.getPrograma().getNombre()))
+        {
+            bloqueRaiz = tablaDeSimbolos.getPrograma();
+        }
+        else
+        {
+            bloqueRaiz = tablaDeSimbolos.getFunciones().get(nombreFuncion);
+            if(bloqueRaiz == null)
+            {
+                System.exit(-1);
+            }
+        }
     }
 
     public String generarGrafo(){
@@ -161,10 +173,11 @@ public class Grafo {
     public String generarGrafoLlamadas()
     {
         grafo += "digraph G{";
+        grafo += bloqueRaiz.getNombre() + ";";
 
         for(String string:bloqueRaiz.getLlamadas())
         {
-            grafo += "algoritmo";
+            grafo += bloqueRaiz.getNombre();
             addArista();
             addEtiquetas(contador, string);
             addNodo(contador);
