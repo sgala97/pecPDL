@@ -4,7 +4,7 @@ public class TablaDeSimbolos
 {
     private HashMap<String, BloqueRaiz> funciones = new HashMap<>();
     private BloqueRaiz programa;
-    private int puntuacionPrograma = 0;
+    private int puntuacionPrograma = 0, lineasEfectivas = 0, puntuacionCiclomatica;
     private BloqueRaiz raizActual;
     private Stack<Bloque> pilaActual = new Stack<>();
 
@@ -27,9 +27,39 @@ public class TablaDeSimbolos
         this.programa = programa;
     }
 
-    public void sumarPuntuacion(int n)
+    public void sumarPuntuacionPrograma(int n)
     {
         puntuacionPrograma += n;
+    }
+
+    public int getPuntuacionPrograma()
+    {
+        return puntuacionPrograma;
+    }
+
+    public void sumarLineasEfectivas(int n)
+    {
+        lineasEfectivas += n;
+    }
+
+    public int getLineasEfectivas()
+    {
+        return puntuacionPrograma;
+    }
+
+    public void sumarPuntuacionCiclomatica(int n)
+    {
+        puntuacionCiclomatica += n;
+    }
+
+    public int getPuntuacionCiclomatica()
+    {
+        return puntuacionCiclomatica;
+    }
+
+    public int sumar(int n)
+    {
+        return puntuacionPrograma;
     }
 
     public BloqueRaiz getRaizActual()

@@ -324,10 +324,12 @@ public class Listener extends pseint_grammarBaseListener
     public void exitPseint(pseint_grammar.PseintContext ctx)
     {
         super.exitPseint(ctx);
-        tablaDeSimbolos.sumarPuntuacion(tablaDeSimbolos.getPrograma().getPuntuacion());
+        tablaDeSimbolos.sumarPuntuacionPrograma(tablaDeSimbolos.getPrograma().getPuntuacion());
+        tablaDeSimbolos.sumarLineasEfectivas(tablaDeSimbolos.getPrograma().getLineasEfectivas());
         for (BloqueRaiz funcion : tablaDeSimbolos.getFunciones().values())
         {
-            tablaDeSimbolos.sumarPuntuacion(funcion.getPuntuacion());
+            tablaDeSimbolos.sumarPuntuacionPrograma(funcion.getPuntuacion());
+            tablaDeSimbolos.sumarLineasEfectivas(funcion.getLineasEfectivas());
         }
     }
 }

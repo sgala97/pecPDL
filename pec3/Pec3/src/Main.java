@@ -24,7 +24,7 @@ public class Main {
         imprimirHijos(tablaDeSimbolos.getPrograma().getHijos(),0);
         //LISTA DE GRAFOS QUE DESEAMOS CREAR
         List<Grafo> grafos= new ArrayList<>();
-        Grafo grafo = new Grafo(tablaDeSimbolos.getPrograma());
+        Grafo grafo = new Grafo(tablaDeSimbolos);
         grafos.add(grafo);
         grafo = new Grafo(tablaDeSimbolos.getPrograma());
         grafos.add(grafo);
@@ -33,7 +33,7 @@ public class Main {
             grafo = new Grafo(bloqueRaiz);
             grafos.add(grafo);
         }
-        HtmlGenerator.generate(grafos, tablaDeSimbolos.getFunciones());
+        HtmlGenerator.generate(grafos);
 
     }
 

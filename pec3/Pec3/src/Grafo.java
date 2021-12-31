@@ -9,11 +9,18 @@ public class Grafo {
     private int aristas = 0;
     private String grafo = "";
     private BloqueRaiz bloqueRaiz;
+    private TablaDeSimbolos tablaDeSimbolos;
     private HashMap<Integer, String> etiquetas = new HashMap<>();
 
     public Grafo(BloqueRaiz bloque){
         bloqueRaiz=bloque;
     }
+
+    public Grafo(TablaDeSimbolos tablaDeSimbolos){
+        this.tablaDeSimbolos=tablaDeSimbolos;
+        bloqueRaiz = tablaDeSimbolos.getPrograma();
+    }
+
     public String generarGrafo(){
         initGrafo();
         for(Bloque hijo:bloqueRaiz.getHijos())
@@ -72,13 +79,14 @@ public class Grafo {
         //nodo condicion
         int nodoInicialAux = contador;
         addArista();
-        addEtiquetas(contador,"condition");
+        addEtiquetas(contador,"IfElseCondition");
         addNodo(contador++);
         //nodo if
         subBloque(bloque.getHijos().get(0));
         //nodo final
         int nodoFinalAux = contador;
         addArista();
+        addEtiquetas(contador,"endIfElse");
         addNodo(contador++);
         addFinSubGrafo();
         addNodo(nodoInicialAux);
@@ -93,12 +101,14 @@ public class Grafo {
         int nodoInicial=contador;
         int nodoFinal=0;
         addArista();
+        addEtiquetas(contador,"switchCondition");
         addNodo(contador++);
         for(int i=0;i<bloque.getHijos().size();i++ ){
             if(i==0) {
                 subBloque(bloque.getHijos().get(0));
                 nodoFinal = contador;
                 addArista();
+                addEtiquetas(contador,"endSwitch");
                 addNodo(contador++);
                 addFinSubGrafo();
             }else {
@@ -113,10 +123,9 @@ public class Grafo {
         }
 
     private void addFor(Bloque bloque){
-        addArista();
-        addNodo(contador++);
         int nodoFor= contador;
         addArista();
+        addEtiquetas(contador,"forCondition");
         addNodo(contador++);
         subBloque(bloque);
         addArista();
@@ -127,6 +136,7 @@ public class Grafo {
 
         int nodoWhile= contador;
         addArista();
+        addEtiquetas(contador,"whileCondition");
         addNodo(contador++);
         subBloque(bloque);
         addArista();
@@ -138,6 +148,7 @@ public class Grafo {
         int nodoDo= contador;
         subBloque(bloque);
         addArista();
+        addEtiquetas(contador,"doWhileCondition");
         addNodo(contador++);
         addArista();
         addNodo(nodoDo);
@@ -147,9 +158,10 @@ public class Grafo {
 
     }
 
-    public String generarGrafoLlamadas(HashMap<String, BloqueRaiz> funciones)
+    public String generarGrafoLlamadas()
     {
         grafo += "digraph G{";
+
         for(String string:bloqueRaiz.getLlamadas())
         {
             grafo += "algoritmo";
@@ -157,7 +169,7 @@ public class Grafo {
             addEtiquetas(contador, string);
             addNodo(contador);
             addFinSubGrafo();
-            subGrafoLlamadas(contador++, funciones.get(string), funciones);
+            subGrafoLlamadas(contador++, tablaDeSimbolos.getFunciones().get(string), tablaDeSimbolos.getFunciones());
         }
         transformarEtiquetas();
         grafo += "}";
@@ -222,5 +234,10 @@ public class Grafo {
     public BloqueRaiz getInfoGrafo()
     {
         return bloqueRaiz;
+    }
+
+    public TablaDeSimbolos getInfoTabla()
+    {
+        return tablaDeSimbolos;
     }
 }
